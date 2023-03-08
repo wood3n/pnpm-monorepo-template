@@ -102,3 +102,21 @@ dist
 
 # TernJS port file
 .tern-port
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# build result
+build
+dist
+build_*
+es
+lib
