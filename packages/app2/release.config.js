@@ -2,6 +2,7 @@
  * @type {import('semantic-release').GlobalConfig}
  */
 export default {
+  extends: "semantic-release-monorepo",
   branches: "master",
   plugins: [
     "@semantic-release/commit-analyzer",
