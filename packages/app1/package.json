@@ -11,7 +11,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc ./src/index.ts --target es6 --outDir ./dist --outfile index.js --sourcemap --declaration --declarationDir ./dist"
+    "build": "tsc ./src/index.ts --target es6 --outDir ./dist --sourcemap --declaration --declarationDir ./dist"
   },
   "engines": {
     "node": ">=18"
