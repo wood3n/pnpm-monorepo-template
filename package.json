@@ -1,54 +1,76 @@
 {
   "name": "pnpm-monorepo-template",
   "private": true,
-  "author": "oxyg3n",
-  "license": "MIT",
-  "description": "pnpm monorepo template",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wood3n/pnpm-monorepo-template.git"
-  },
+  "description": "pnpm monorepo by turborepo",
   "keywords": [
+    "pnpm",
+    "pnpm monorepo",
+    "pnpm workspace",
+    "turborepo",
+    "javascript",
     "typescript",
     "frontend",
-    "frontend monorepo",
-    "pnpm",
-    "monorepo",
-    "template"
+    "react",
+    "react components"
   ],
+  "license": "MIT",
+  "author": "oxyg3n",
   "type": "module",
   "scripts": {
-    "prepare": "husky",
-    "test": "vitest",
+    "ac": "npx changeset add",
+    "build": "npx turbo run build",
+    "build:components": "npx turbo run build --filter components",
+    "build:components-site": "npx turbo run build-storybook",
+    "build:utils": "npx turbo run build --filter utils",
+    "ci:publish": "npx turbo run build && npx changeset publish",
     "coverage": "vitest run --coverage",
-    "build:app1": "pnpm --filter app1 run build",
-    "build:app2": "pnpm --filter app2 run build"
+    "dev:components": "npx turbo watch components#dev",
+    "prepare": "is-ci || husky",
+    "test": "vitest"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": "prettier-eslint --write",
+    "**/*.{json,md,mdx}": "prettier --write",
+    "**/*.{css,scss,sass,less}": [
+      "prettier --write",
+      "stylelint --fix"
+    ]
   },
   "devDependencies": {
+    "@changesets/changelog-git": "^0.2.0",
+    "@changesets/cli": "^2.27.8",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@semantic-release/changelog": "^6.0.3",
+    "@types/node": "^20.14.11",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitest/coverage-istanbul": "^1.6.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import-x": "^0.5.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.9.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-simple-import-sort": "^12.1.0",
+    "glob": "^11.0.0",
     "husky": "^9.0.11",
+    "is-ci": "^3.0.1",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "prettier-eslint-cli": "^8.0.1",
-    "semantic-release": "^24.0.0",
-    "semantic-release-monorepo": "^8.0.2",
+    "prettier-plugin-packagejson": "^2.5.1",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "stylelint": "^16.8.1",
+    "stylelint-config-standard": "^36.0.1",
+    "stylelint-prettier": "^5.0.2",
+    "turbo": "^2.1.1",
     "typescript": "^5.5.2",
     "typescript-eslint": "^7.13.1",
     "vitest": "^1.6.0"
   },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx,json}": "prettier-eslint **/*.{js,jsx,ts,tsx,json} --write"
-  },
+  "packageManager": "pnpm@8.15.7",
   "engines": {
     "node": ">=18"
   }

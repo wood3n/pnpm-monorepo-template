@@ -1,0 +1,44 @@
+name: Snapshot release on PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  Release:
+    name: SnapshotRelease
+    if: ${{ ! startsWith(github.event.pull_request.title, 'auto-changesets-release') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - name: Setup npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_ACCESS_TOKEN }}" > .npmrc
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.15.7
+          run_install: true
+
+      - name: Check for changesets
+        id: changesets
+        run: |
+          if [ -n "$(git diff origin/master --name-only -- '*.changeset/*')" ]; then
+            echo "hasChangesets=true" >> $GITHUB_OUTPUT
+          else
+            echo "hasChangesets=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Snapshot release
+        if: steps.changesets.outputs.hasChangesets == 'true'
+        run: npx turbo run build && npx changeset version --snapshot beta && npx changeset publish --tag beta --no-git-tag

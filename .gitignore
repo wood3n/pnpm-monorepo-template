@@ -49,6 +49,7 @@ typings/
 
 # Optional npm cache directory
 .npm
+.npmrc
 
 # Optional eslint cache
 .eslintcache
@@ -120,3 +121,13 @@ dist
 build_*
 es
 lib
+
+# packages/components storybook output
+*storybook.log
+storybook-static
+
+# vercel preview deploy config
+.vercel
+
+# turborepo cache
+.turbo
