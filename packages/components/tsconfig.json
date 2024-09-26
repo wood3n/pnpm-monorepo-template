@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "paths": {
+      "@/": ["./src"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "storybook-static"],
+  "references": [
+    {
+      "path": "../utils"
+    }
+  ]
+}

@@ -1,12 +1,16 @@
+const project = ["./tsconfig.node.json", "./packages/*/tsconfig.json", "./packages/*/tsconfig.node.json"];
+
 module.exports = {
   extends: [
     "eslint:recommended",
-    "plugin:@typescript-eslint/strict",
-    "plugin:@typescript-eslint/stylistic",
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended",
   ],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "simple-import-sort", "jsx-a11y"],
@@ -14,7 +18,7 @@ module.exports = {
   parserOptions: {
     sourceType: "module",
     ecmaVersion: "latest",
-    project: ["./tsconfig.eslint.json", "./packages/*/tsconfig.json"],
+    project,
     tsconfigRootDir: __dirname,
     ecmaFeatures: {
       jsx: true,
@@ -25,16 +29,16 @@ module.exports = {
       "@typescript-eslint/parser": [".ts", ".tsx"],
     },
     "import/resolver": {
-      node: true,
+      node: {
+        project,
+      },
       typescript: {
         alwaysTryTypes: true,
-        project: ["./packages/*/tsconfig.json"],
+        project,
       },
     },
     react: {
-      pragma: "React", // Pragma to use, default to "React"
-      fragment: "Fragment", // Fragment to use (may be a property of <pragma>), default to "Fragment"
-      version: "16.8.0",
+      version: "18",
     },
   },
   overrides: [
@@ -47,6 +51,18 @@ module.exports = {
     "eol-last": 0,
     "no-undef": 0,
     "no-unused-vars": 0,
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        args: "all",
+        argsIgnorePattern: "^_",
+        caughtErrors: "all",
+        caughtErrorsIgnorePattern: "^_",
+        destructuredArrayIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
+      },
+    ],
     "max-len": 0,
     "no-console": 0,
     indent: 0,
@@ -61,6 +77,7 @@ module.exports = {
       },
     ],
     "object-curly-spacing": ["error", "always"],
+    "jsx-a11y/alt-text": 0,
     "import/no-cycle": 0,
     "import/prefer-default-export": 0,
     "import/no-extraneous-dependencies": 0,
@@ -125,8 +142,8 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-unsafe-argument": 0,
     "@typescript-eslint/indent": ["error", 2],
-    "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-unused-expressions": 2,
     "@typescript-eslint/consistent-type-imports": [2, { disallowTypeAnnotations: false }],
+    "@typescript-eslint/prefer-nullish-coalescing": 0,
   },
 };
